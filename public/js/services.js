@@ -104,6 +104,6 @@ pos.service('Settings', ['$http', function ($http) {
       return $http.get(settingsFile).then(function (res) {
         return res.data;
       });
-    }
+    };
 
 }]);

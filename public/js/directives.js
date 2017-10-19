@@ -13,10 +13,10 @@ pos.directive('navMenu',function ($location) {
       scope.isActive = function (url) {
         if (url === 'transactions')
           url = 'transaction';
-        
+
         url = '/' + url;
         return $location.path().indexOf(url) !== -1;
-      }
+      };
 
     }
   };
@@ -40,7 +40,7 @@ pos.directive('productForm',function ($location) {
 
       scope.tabOnEnter = function ($event) {
         if ($event.keyCode === 13) {
-          $name.select(); 
+          $name.select();
           $event.preventDefault();
         }
       };
@@ -62,7 +62,7 @@ pos.directive('addManualItem',function () {
     },
     templateUrl: 'templates/directives/add-manual-item.html',
     link: function (scope, el) {
-      
+
       scope.add = function () {
         scope.manualItem.name = "----";
         scope.addItem({item: scope.manualItem});
@@ -84,19 +84,19 @@ pos.directive('checkout', function (Settings) {
     },
     templateUrl: 'templates/directives/checkout.html',
     link: function (scope, el) {
-      
+
       $paymentField = el.find('form').eq(0).find('input').eq(0);
-      
+
       scope.focusPayment = function () {
         $('#checkoutPaymentAmount').select();
       };
-      
+
       scope.getChangeDue = function () {
         if (scope.paymentAmount && scope.paymentAmount > scope.cartTotal) {
           var change =  parseFloat(scope.paymentAmount) - parseFloat(scope.cartTotal);
           return change;
         }
-        else 
+        else
           return 0;
       };
 
@@ -135,11 +135,11 @@ pos.directive('receipt',function (Settings) {
     link: function (scope) {
 
       scope.backupDate = new Date();
-      
+
       Settings.get().then(function (settings) {
         scope.settings = settings;
       });
-      
+
     }
   };
 
