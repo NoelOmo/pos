@@ -90,11 +90,27 @@ app.get('/day-total', function (req, res) {
 // GET transactions for date
 app.get('/by-date', function (req, res) {
 
-	var startDate = new Date(2015, 2, 15);
-	startDate.setHours(0,0,0,0);
+	var startDate;
+	var endDate;
 
-	var endDate = new Date(2015, 2, 15);
-	endDate.setHours(23,59,59,999);
+	// if date is provided
+	if (req.query.date) {
+		startDate = new Date(req.query.date);
+		startDate.setHours(0,0,0,0);
+
+		endDate = new Date(req.query.date);
+		endDate.setHours(23,59,59,999);
+	}
+	else {
+
+		// beginning of current day
+		startDate = new Date();
+		startDate.setHours(0,0,0,0);
+
+		// end of current day
+		endDate = new Date();
+		endDate.setHours(23,59,59,999);
+	}
 
 	Transactions.find({ date: { $gte: startDate.toJSON(), $lte: endDate.toJSON() } }, function (err, docs) {
 		if (docs)
