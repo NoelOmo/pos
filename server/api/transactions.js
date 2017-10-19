@@ -41,6 +41,9 @@ app.get('/limit', function (req, res) {
 // GET total sales for the current day
 app.get('/day-total', function (req, res) {
 
+  var startDate;
+	var endDate;
+
 	// if date is provided
 	if (req.query.date) {
 		startDate = new Date(req.query.date);
@@ -52,11 +55,11 @@ app.get('/day-total', function (req, res) {
 	else {
 
 		// beginning of current day
-		var startDate = new Date();
+		startDate = new Date();
 		startDate.setHours(0,0,0,0);
 
 		// end of current day
-		var endDate = new Date();
+		endDate = new Date();
 		endDate.setHours(23,59,59,999);
 	}
 
