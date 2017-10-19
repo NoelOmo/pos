@@ -1,5 +1,5 @@
 var pos = angular.module('POS', [
-  'ngRoute', 
+  'ngRoute',
   'ngAnimate',
   'lr.upload',
   'ui.odometer',
@@ -13,9 +13,9 @@ var pos = angular.module('POS', [
 var serverAddress;
 
 if (window.location.host === 'pos.dev')
-  serverAddress = 'http://pos.dev'
+  serverAddress = 'http://pos.dev';
 else
-  serverAddress = 'http://pos.afaqtariq.com:8080';
+  serverAddress = 'http://localhost:8080';
 
 var socket = io.connect(serverAddress);
 
@@ -25,7 +25,7 @@ var socket = io.connect(serverAddress);
 ////////////////////////////////////////////////////
 
 pos.controller('body', function ($scope, $location, Settings) {
-  
+
   $scope.onHomePage = function () {
     return ($location.path() === '/' || $location.path() === '#/');
   };
@@ -53,16 +53,16 @@ pos.controller('inventoryController', function ($scope, $location, Inventory) {
 });
 
 pos.controller('newProductController', function ($scope, $location, $route, Inventory) {
-  
+
   $scope.addMultipleProducts = false;
 
   $scope.createProduct = function (product) {
-    
+
     Inventory.createProduct($scope.newProduct).then(function (product) {
 
       if ($scope.addMultipleProducts) refreshForm();
       else $location.path('/inventory');
-      
+
     });
 
   };
@@ -74,14 +74,14 @@ pos.controller('newProductController', function ($scope, $location, $route, Inve
 });
 
 pos.controller('editProductController', function ($scope, $location, $routeParams, Inventory, upload) {
-    
+
   // get and set inventory
   Inventory.getProduct($routeParams.productId).then(function (product) {
     $scope.product = angular.copy(product);
   });
 
   $scope.saveProduct = function (product) {
-    
+
     Inventory.updateProduct(product).then(function (updatedProduct) {
       console.log('updated!');
     });
@@ -115,7 +115,7 @@ pos.controller('editProductController', function ($scope, $location, $routeParam
           console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
       }
     );
-  }
+  };
 
 });
 
@@ -123,23 +123,23 @@ pos.controller('editProductController', function ($scope, $location, $routeParam
 pos.controller('posController', function ($scope, $location, Inventory, Transactions) {
 
   $scope.barcode = '';
-  
+
   function barcodeHandler (e) {
-      
+
       $scope.barcodeNotFoundError = false;
 
       // if enter is pressed
       if (e.which === 13) {
-        
+
         // if the barcode accumulated so far is valid, add product to cart
         if ($scope.isValidProduct($scope.barcode)) $scope.addProductToCart($scope.barcode);
-        else 
+        else
           console.log('invalid barcode: ' + $scope.barcode);
           // $scope.barcodeNotFoundError = true;
 
         $scope.barcode = '';
         $scope.$digest();
-      } 
+      }
       else {
         $scope.barcode += String.fromCharCode(e.which);
       }
@@ -183,7 +183,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
   $scope.refreshInventory();
 
   startCart();
-  
+
   var addProductAndUpdateCart = function (product) {
     $scope.cart.products = $scope.cart.products.concat([product]);
     $scope.updateCartTotals();
@@ -194,7 +194,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
     product.cart_item_id = $scope.cart.products.length + 1;
 
     if (product.food) product.tax_percent = 0;
-    else product.tax_percent = .08 ;
+    else product.tax_percent = 0.08;
 
     delete product.quantity_on_hand;
     delete product.food;
@@ -203,7 +203,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 
   var productAlreadyInCart = function (barcode) {
     var product = _.find($scope.cart.products, { barcode: barcode.toString() });
-    
+
     if (product) {
       product.quantity = product.quantity + 1;
       $scope.updateCartTotals();
@@ -213,7 +213,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
   };
 
   $scope.addProductToCart = function (barcode) {
-    
+
     if (productAlreadyInCart(barcode)) return;
     else {
       var product = angular.copy(_.find($scope.inventory, { barcode: barcode.toString() }));
@@ -225,7 +225,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 
   $scope.addManualItem = function (product) {
     product.quantity = 1;
-    product = $scope.cleanProduct(product)
+    product = $scope.cleanProduct(product);
     addProductAndUpdateCart(product);
   };
 
@@ -274,7 +274,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 
       // clear cart and start fresh
       startFreshCart();
-      
+
     });
 
     $scope.refreshInventory();
@@ -295,7 +295,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 });
 
 pos.controller('transactionsController', function ($scope, $location, Transactions) {
-    
+
   Transactions.getAll().then(function (transactions) {
     $scope.transactions = _.sortBy(transactions, 'date').reverse();
   });
@@ -321,7 +321,7 @@ pos.controller('transactionsController', function ($scope, $location, Transactio
 });
 
 pos.controller('viewTransactionController', function ($scope, $routeParams, Transactions) {
-  
+
   var transactionId = $routeParams.transactionId;
 
   Transactions.getOne(transactionId).then(function (transaction) {
@@ -331,7 +331,7 @@ pos.controller('viewTransactionController', function ($scope, $routeParams, Tran
 });
 
 pos.controller('liveCartController', function ($scope, Transactions, Settings) {
-  
+
   $scope.recentTransactions = [];
 
   var getTransactionsData = function () {
