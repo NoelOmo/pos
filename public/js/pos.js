@@ -134,6 +134,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
         // if the barcode accumulated so far is valid, add product to cart
         if ($scope.isValidProduct($scope.barcode)) $scope.addProductToCart($scope.barcode);
         else
+          window.alert('Código inválido: ' + $scope.barcode);
           console.log('invalid barcode: ' + $scope.barcode);
           // $scope.barcodeNotFoundError = true;
 
@@ -146,7 +147,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 
   }
 
-  $(document).on('keypress', barcodeHandler);
+  $(document).off('keypress').on('keypress', barcodeHandler);
 
   var rawCart = {
     products: [],
