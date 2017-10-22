@@ -21,7 +21,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="transaction in transactions track by $index | filter: {_id: !'__autoid__'} | orderBy: getTransactionDate(transaction):reverse">
+		<tr ng-repeat="transaction in transactions track by $index | orderBy: getTransactionDate(transaction):reverse">
 			<td> {{ transaction._id }} </td>
 			<td> {{ transaction.date | date:'short' }} </td>
 			<td> {{ transaction.total | currency }} </td>

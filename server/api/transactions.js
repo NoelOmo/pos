@@ -15,7 +15,12 @@ var Transactions = new Datastore({
 	autoload: true
 });
 
-Transactions.getAutoincrementId = function (onFind) {
+var CustomId = new Datastore({
+	filename: './server/databases/index.db',
+	autoload: true
+});
+
+CustomId.getAutoincrementId = function (onFind) {
     this.update(
         { _id: '__autoid__' },
         { $inc: { seq: 1 } },
@@ -137,7 +142,7 @@ app.post('/new', function (req, res) {
 
 	var newTransaction = req.body;
 
-	Transactions.getAutoincrementId( function(err, custom_id){
+	CustomId.getAutoincrementId( function(err, custom_id){
 		if(err){
 			res.status(500).send(err);
 		} else{
