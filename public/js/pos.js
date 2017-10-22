@@ -297,13 +297,13 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
   };
 
   $scope.addQuantity = function (product) {
-    product.quantity = parseInt(product.quantity) + 1;
+    product.quantity = product.quantity + 1;
     $scope.updateCartTotals();
   };
 
   $scope.removeQuantity = function (product) {
-    if (parseInt(product.quantity) > 1) {
-      product.quantity = parseInt(product.quantity) - 1;
+    if (product.quantity > 1) {
+      product.quantity = product.quantity - 1;
       $scope.updateCartTotals();
     }
   };
