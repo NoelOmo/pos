@@ -1,4 +1,18 @@
+angular.module('utils.autofocus', [])
+
+.directive('autofocus', ['$timeout', function($timeout) {
+  return {
+    restrict: 'A',
+    link : function($scope, $element) {
+      $timeout(function() {
+        $element[0].focus();
+      });
+    }
+  };
+}]);
+
 var pos = angular.module('POS', [
+  'utils.autofocus',
   'ngRoute',
   'ngAnimate',
   'lr.upload',
