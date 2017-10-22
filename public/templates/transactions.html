@@ -1,7 +1,7 @@
 <br/>
 
 <div class="text-center">
-	<span class="">Today's Sales</span> 
+	<span class="">Today's Sales</span>
 	<br/>
 	<span class="text-success checkout-total-price">
 		$ <span odometer="todayTotal"></span>
@@ -13,19 +13,19 @@
 <table ng-if="transactions" class="table table-hover table-striped">
 	<thead>
 		<tr>
+			<th>Id</th>
 			<th>Time</th>
 			<th>Total</th>
 			<th>Customer Payment</th>
-			<th>Products</th>
 			<th>Open</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="transaction in transactions track by $index | orderBy: getTransactionDate(transaction):reverse">
+		<tr ng-repeat="transaction in transactions track by $index | filter: {_id: !'__autoid__'} | orderBy: getTransactionDate(transaction):reverse">
+			<td> {{ transaction._id }} </td>
 			<td> {{ transaction.date | date:'short' }} </td>
 			<td> {{ transaction.total | currency }} </td>
 			<td> {{ transaction.payment | currency }}</td>
-			<td> {{ getNumberOfProducts(transaction.products) }} </td>
 			<td>
 				<a class="btn btn-info" href="#/transaction/{{ transaction._id }}">
 					<i class="glyphicon glyphicon-new-window"></i>
@@ -35,5 +35,5 @@
 		<tr ng-if="!transactions.length">
 			<td colspan="5">No transactions found.</td>
 		</tr>
-	</tbody>	
+	</tbody>
 </table>

@@ -15,6 +15,20 @@ var Transactions = new Datastore({
 	autoload: true
 });
 
+Transactions.getAutoincrementId = function (onFind) {
+    this.update(
+        { _id: '__autoid__' },
+        { $inc: { seq: 1 } },
+        { upsert: true, returnUpdatedDocs: true },
+        function (err, affected, autoid) {
+            if(onFind) {
+							onFind(err, autoid.seq);
+						}
+        }
+    );
+    return this;
+};
+
 app.get('/', function (req, res) {
 	res.send('Transactions API');
 });
@@ -123,12 +137,19 @@ app.post('/new', function (req, res) {
 
 	var newTransaction = req.body;
 
-	Transactions.insert(newTransaction, function (err, transaction) {
-		if (err)
+	Transactions.getAutoincrementId( function(err, custom_id){
+		if(err){
 			res.status(500).send(err);
-		else {
-			res.sendStatus(200);
-			Inventory.decrementInventory(transaction.products);
+		} else{
+			newTransaction._id = custom_id.toString();
+			Transactions.insert(newTransaction, function (err, transaction) {
+				if (err)
+					res.status(500).send(err);
+				else {
+					res.status(200).send({"id":newTransaction._id});
+					Inventory.decrementInventory(transaction.products);
+				}
+			});
 		}
 	});
 });
