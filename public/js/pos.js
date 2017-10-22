@@ -145,23 +145,24 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
       // if enter is pressed
       if (e.which === 13) {
 
+        $scope.barcode = $('#product-entry').val();
+
         // if the barcode accumulated so far is valid, add product to cart
-        if ($scope.isValidProduct($scope.barcode)) $scope.addProductToCart($scope.barcode);
-        else
-          window.alert('Código inválido: ' + $scope.barcode);
-          console.log('invalid barcode: ' + $scope.barcode);
+        if ($scope.isValidProduct($scope.barcode)) {
+          $scope.addProductToCart($scope.barcode);
+          $scope.barcode = '';
+          $scope.$digest();
+          $('#product-entry').val($scope.barcode);
+        }
+        else {
+          window.alert('Referência não encontrada: ' + $scope.barcode);
+          console.log('invalid product: ' + $scope.barcode);
           // $scope.barcodeNotFoundError = true;
-
-        $scope.barcode = '';
-        $scope.$digest();
+        }
       }
-      else {
-        $scope.barcode += String.fromCharCode(e.which);
-      }
-
   }
 
-  $(document).off('keypress').on('keypress', barcodeHandler);
+  $('#product-entry').off('keypress').on('keypress', barcodeHandler);
 
   var rawCart = {
     products: [],
