@@ -209,12 +209,9 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 
   $scope.cleanProduct = function (product) {
     product.cart_item_id = $scope.cart.products.length + 1;
-
-    if (product.food) product.tax_percent = 0;
-    else product.tax_percent = 0.08;
-
+    product.tax_percent = 0.08;
+    
     delete product.quantity_on_hand;
-    delete product.food;
     return product;
   };
 
