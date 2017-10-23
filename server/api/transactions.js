@@ -159,6 +159,26 @@ app.post('/new', function (req, res) {
 	});
 });
 
+// Add customer name to this transaction
+app.post('/update', function (req, res) {
+
+	var targetId = req.body.id;
+	var params = req.body.params;
+
+	Transactions.update(
+		{_id: targetId},
+		{$set: params},
+		{},
+		function (err, numReplaced)  {
+		if (err)
+			res.status(500).send(err);
+		else {
+			res.sendStatus(200);
+		}
+	});
+});
+
+
 // GET single transaction
 app.get('/:transactionId', function (req, res) {
 

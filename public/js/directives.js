@@ -75,6 +75,43 @@ pos.directive('addManualItem',function () {
 
 });
 
+pos.directive('order', function(Settings){
+  return {
+    restrict: 'E',
+    scope: {
+      finishOrder: '&',
+      newOrder: '&',
+      cartTotal: '=',
+      transactionId: '='
+    },
+    templateUrl: 'templates/directives/order.html',
+    link: function (scope, el) {
+
+      scope.focusName = function () {
+        $('#orderCustomerName').select();
+      };
+
+      scope.openOrder = function () {
+        scope.newOrder();
+      };
+
+      scope.addCustomerName = function () {
+        var name = angular.copy(scope.customerName);
+        if (!name) name = "";
+
+        var orderInfo = {
+          customerName:name
+        };
+
+        scope.finishOrder({info:orderInfo});
+
+        el.find('div').eq(0).modal('hide');
+        delete scope.customerName;
+      };
+    }
+  };
+});
+
 pos.directive('checkout', function (Settings) {
   return {
     restrict: 'E',

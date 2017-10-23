@@ -6,10 +6,19 @@
 		$<span odometer="cart.total"></span>
 	</span>
 
+	<!--
 	<checkout
 		cart-total="cart.total"
 		print-receipt="printReceipt(payment)">
 	</checkout>
+-->
+	<order
+		cart-total="cart.total"
+		new-order="newOrder()"
+		transaction-id = "transactionId"
+		finish-order="finishOrder(info)">
+	</order>
+
 </div>
 
 
@@ -24,7 +33,7 @@
 -->
 		<tr>
 			<td colspan="6" class="text-center">
-		  <div class="form-group" ng-class="{ 'has-error': addManualItemForm.price.$error.required }">
+		  <div class="form-group" ng-class="{ 'has-error': false }">
 			  <label class="col-md-2 lead" for="product-reference">Produto:</label>
 			  <div class="col-md-8 input-group">
 				  <input autofocus id="product-entry" type="text" class="form-control" name="product-reference" ng-model="manualItem.price"  required/>

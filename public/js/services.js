@@ -94,6 +94,12 @@ pos.service('Transactions', ['$http', function ($http, Inventory) {
         });
     };
 
+    this.update = function (transaction) {
+        return $http.post(transactionApiUrl + 'update', transaction).then(function (res) {
+          return res.data;
+        });
+    };
+
 }]);
 
 pos.service('Settings', ['$http', function ($http) {

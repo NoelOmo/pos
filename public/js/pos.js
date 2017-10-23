@@ -277,11 +277,39 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
     updateCartInLocalStorage();
   };
 
-  $scope.printReceipt = function (payment) {
+  $scope.newOrder = function () {
     // print receipt
     var cart = angular.copy($scope.cart);
-    cart.payment = angular.copy(payment);
+    cart.payment = 0;
     cart.date = new Date();
+
+    // save to database
+    Transactions.add(cart).then(function (res) {
+      // id of this transaction
+      $scope.transactionId = res;
+    });
+
+  };
+
+  $scope.finishOrder = function (info) {
+    var data = {id: $scope.transactionId.id, params: info};
+    console.log(data)
+
+    Transactions.update(data).then(function (res) {
+      socket.emit('cart-transaction-complete', {});
+      // clear cart and start fresh
+      startFreshCart();
+    });
+
+  };
+
+
+  $scope.printReceipt = function (info) {
+    // print receipt
+    var cart = angular.copy($scope.cart);
+    if(info.payment){
+      cart.payment = angular.copy(info.payment);
+    }
 
     // save to database
     Transactions.add(cart).then(function (res) {
@@ -294,6 +322,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
     });
 
     $scope.refreshInventory();
+
   };
 
   $scope.addQuantity = function (product) {
