@@ -168,7 +168,6 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
   var rawCart = {
     products: [],
     total: 0,
-    total_tax: 0,
   };
 
   var startCart = function () {
@@ -209,8 +208,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 
   $scope.cleanProduct = function (product) {
     product.cart_item_id = $scope.cart.products.length + 1;
-    product.tax_percent = 0.08;
-    
+
     delete product.quantity_on_hand;
     return product;
   };
@@ -261,15 +259,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
   $scope.updateCartTotals = function () {
     $scope.cart.total = _.reduce($scope.cart.products, function (total, product) {
       var weightedPrice = parseFloat( product.price * product.quantity );
-      var weightedTax = parseFloat( weightedPrice * product.tax_percent );
-      var weightedPricePlusTax = weightedPrice + weightedTax;
-      return total + weightedPricePlusTax;
-    }, 0);
-
-    $scope.cart.total_tax = _.reduce($scope.cart.products, function (total, product) {
-      var weightedPrice = parseFloat( product.price * product.quantity );
-      var weightedTax = parseFloat( weightedPrice * product.tax_percent );
-      return total + weightedTax;
+      return total + weightedPrice;
     }, 0);
 
     updateCartInLocalStorage();
