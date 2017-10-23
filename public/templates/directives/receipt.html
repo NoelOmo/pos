@@ -1,7 +1,7 @@
 <div>
 
   <div class="text-center">
-    <button class="btn btn-primary" print-btn><i class="fa fa-print"></i> Print</button>
+    <button class="btn btn-primary" print-btn><i class="fa fa-print"></i>Imprimir</button>
   </div>
 
   <br>
@@ -13,26 +13,26 @@
     <table print-table="product" class="receipt table table-hover">
         <thead>
           <tr class="small">
-            <th> Order reference </th>
-            <th> Customer </th>
-            <th> Status </th>
+            <th> Referência </th>
+            <th> Cliente </th>
+            <th> Status do pedido </th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td> {{ transaction._id }} </td>
             <td> {{ transaction.customerName }} </td>
-            <td ng-if="transaction.status === 0">  Ordered  </td>
-            <td ng-if="transaction.status === 1">  Paid  </td>
+            <td ng-if="transaction.status === 0">  Aguardando pagamento  </td>
+            <td ng-if="transaction.status === 1">  Pago  </td>
           </tr>
         </tbody>
       </table>
     <table class="receipt table table-hover">
         <thead>
           <tr class="small">
-            <th> Quantity </th>
-            <th> Product </th>
-            <th> Price </th>
+            <th> Quantidade </th>
+            <th> Produto </th>
+            <th> Preço </th>
           </tr>
         </thead>
         <tbody>
@@ -48,7 +48,7 @@
                 {{ ( product.price * product.quantity ) | currency }}
               </span>
               <br/>
-              <small class="small-text"><em>({{ product.price | currency }} each)</em></small>
+              <small class="small-text"><em>({{ product.price | currency }} cada)</em></small>
             </td>
           </tr>
         </tbody>
@@ -61,12 +61,12 @@
           </tr>
           <tr>
             <td></td>
-            <td>Payment</td>
+            <td>Recebido</td>
             <td> {{ transaction.payment | currency }} </td>
           </tr>
           <tr class="lead">
             <td></td>
-            <td>Change</td>
+            <td>Troco</td>
             <td> {{ transaction.payment - transaction.total | currency }} </td>
           </tr>
         </tbody>

@@ -10,10 +10,14 @@
     <i class="glyphicon glyphicon-shopping-cart"></i>
     <br/>
     <br/>
-    O<br/>
-    r<br/>
-    d<br/>
-    e<br/>
+    F<br/>
+    i<br/>
+    n<br/>
+    a<br/>
+    l<br/>
+    i<br/>
+    z<br/>
+    a<br/>
     r
 </button>
 
@@ -35,19 +39,19 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myOrderLabel">Order</h4>
+        <h4 class="modal-title" id="myOrderLabel">Finalizar</h4>
       </div>
       <div class="modal-body">
 
         <div class="lead">
           <h3>Total: <span class="text-danger">{{ cartTotal | currency }}</span></h3>
-          <h3>Reference: <span class="text-success"> {{ transactionId.id }} </span></h3>
+          <h3>Compra número: <span class="text-success"> {{ transactionId.id }} </span></h3>
 
           <form class="form-horizontal" name="nameForm" ng-submit="addCustomerName()">
 
             <div class="form-group">
               <div class="input-group">
-                <div class="input-group-addon">Name</div>
+                <div class="input-group-addon">Nome do cliente</div>
                 <input type="text"
                   id="orderCustomerName"
                   class="form-control input-lg"
@@ -57,7 +61,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary btn-lg lead">
-              Finish
+              Fechar
             </button>
 
           </form>

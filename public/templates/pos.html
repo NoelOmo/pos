@@ -28,7 +28,7 @@
 		<tr>
 			<td colspan="6" class="text-center">
 		  <div class="form-group" ng-class="{ 'has-error': false }">
-			  <label class="col-md-2 lead" for="product-reference">Product:</label>
+			  <label class="col-md-2 lead" for="product-reference">Produto:</label>
 			  <div class="col-md-8 input-group">
 				  <input autofocus id="product-entry" type="text" class="form-control" name="product-reference" ng-model="manualItem.price"  required/>
 			  </div>
@@ -37,9 +37,9 @@
     </tr>
 
 		<tr class="titles">
-			<th>Name</th>
-			<th>Price</th>
-			<th>Quantity</th>
+			<th>Nome</th>
+			<th>Preço</th>
+			<th>Quantidade</th>
 			<th>Total</th>
 			<th></th>
 		</tr>
@@ -80,7 +80,7 @@
 			</td>
 		</tr>
 		<tr ng-if="!cart.products.length">
-			<td colspan="6">Scan products or add unlisted item above.</td>
+			<td colspan="6">Nenhum produto adicionado.</td>
 		</tr>
 	</tbody>
 </table>
