@@ -1,10 +1,16 @@
 <div>
 
-  <div class="panel panel-primary">
+  <div class="text-center">
+    <button class="btn btn-primary" print-btn><i class="fa fa-print"></i> Print</button>
+  </div>
+
+  <br>
+
+  <div print-section class="panel panel-primary">
 
     <div class="panel-heading text-center lead">{{ transaction.date || backupDate | date:'medium' }}</div>
 
-    <table class="receipt table table-hover">
+    <table print-table="product" class="receipt table table-hover">
         <thead>
           <tr class="small">
             <th> Order reference </th>
