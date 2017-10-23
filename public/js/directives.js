@@ -147,7 +147,11 @@ pos.directive('checkout', function (Settings) {
           paymentAmount: paymentAmount,
         };
 
-        scope.printReceipt({ payment: paymentAmount });
+        var value = {
+          payment:paymentAmount
+        };
+
+        scope.printReceipt({data:value});
         scope.transactionComplete = true;
       };
 

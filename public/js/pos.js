@@ -278,7 +278,6 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
   };
 
   $scope.newOrder = function () {
-    // print receipt
     var cart = angular.copy($scope.cart);
     cart.payment = 0;
     cart.date = new Date();
@@ -292,37 +291,15 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
   };
 
   $scope.finishOrder = function (info) {
+    info.status = 0; // order is closed, but it is not paid.
     var data = {id: $scope.transactionId.id, params: info};
-    console.log(data)
 
     Transactions.update(data).then(function (res) {
       socket.emit('cart-transaction-complete', {});
       // clear cart and start fresh
       startFreshCart();
     });
-
-  };
-
-
-  $scope.printReceipt = function (info) {
-    // print receipt
-    var cart = angular.copy($scope.cart);
-    if(info.payment){
-      cart.payment = angular.copy(info.payment);
-    }
-
-    // save to database
-    Transactions.add(cart).then(function (res) {
-
-      socket.emit('cart-transaction-complete', {});
-
-      // clear cart and start fresh
-      startFreshCart();
-
-    });
-
     $scope.refreshInventory();
-
   };
 
   $scope.addQuantity = function (product) {
@@ -372,6 +349,21 @@ pos.controller('viewTransactionController', function ($scope, $routeParams, Tran
   Transactions.getOne(transactionId).then(function (transaction) {
     $scope.transaction = angular.copy(transaction);
   });
+
+  $scope.printReceipt = function (info) {
+      // print receipt
+      info.status = 1; // order is paid.
+
+      var data = {id: transactionId, params: info};
+
+      // update database
+      Transactions.update(data).then(function (res) {
+        // refresh page
+        Transactions.getOne(transactionId).then(function (transaction) {
+          $scope.transaction = angular.copy(transaction);
+        });
+      });
+    };
 
 });
 

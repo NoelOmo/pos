@@ -23,17 +23,33 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="transaction in transactions track by $index | orderBy: getTransactionDate(transaction):reverse">
-			<td> {{ transaction._id }} </td>
-			<td> {{ transaction.date | date:'short' }} </td>
-			<td> {{ transaction.total | currency }} </td>
-			<td> {{ transaction.payment | currency }}</td>
-			<td> {{ transaction.customerName }}</td>
-			<td>
+			<td ng-if="transaction.status === 0" style="background-color:rgba(255, 99, 71, 0.5)"> {{ transaction._id }} </td>
+			<td ng-if="transaction.status === 1" style="background-color:rgba(60, 179, 113, 0.5)"> {{ transaction._id }} </td>
+
+			<td ng-if="transaction.status === 0" style="background-color:rgba(255, 99, 71, 0.5)"> {{ transaction.date | date:'short' }} </td>
+			<td ng-if="transaction.status === 1" style="background-color:rgba(60, 179, 113, 0.5)"> {{ transaction.date | date:'short' }} </td>
+
+			<td ng-if="transaction.status === 0" style="background-color:rgba(255, 99, 71, 0.5)">  {{ transaction.total | currency }}  </td>
+			<td ng-if="transaction.status === 1" style="background-color:rgba(60, 179, 113, 0.5)">  {{ transaction.total | currency }}  </td>
+
+			<td ng-if="transaction.status === 0" style="background-color:rgba(255, 99, 71, 0.5)">  {{ transaction.payment | currency }}  </td>
+			<td ng-if="transaction.status === 1" style="background-color:rgba(60, 179, 113, 0.5)">  {{ transaction.payment | currency }}  </td>
+
+			<td ng-if="transaction.status === 0" style="background-color:rgba(255, 99, 71, 0.5)">  {{ transaction.customerName }}  </td>
+			<td ng-if="transaction.status === 1" style="background-color:rgba(60, 179, 113, 0.5)">  {{ transaction.customerName }}  </td>
+
+			<td ng-if="transaction.status === 0" style="background-color:rgba(255, 99, 71, 0.5)">
+				<a class="btn btn-info" href="#/transaction/{{ transaction._id }}">
+					<i class="glyphicon glyphicon-new-window"></i>
+				</a>
+			</td>
+			<td ng-if="transaction.status === 1" style="background-color:rgba(60, 179, 113, 0.5)">
 				<a class="btn btn-info" href="#/transaction/{{ transaction._id }}">
 					<i class="glyphicon glyphicon-new-window"></i>
 				</a>
 			</td>
 		</tr>
+
 		<tr ng-if="!transactions.length">
 			<td colspan="5">No transactions found.</td>
 		</tr>
