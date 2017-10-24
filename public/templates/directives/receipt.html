@@ -8,7 +8,7 @@
 
   <div print-section class="panel panel-primary">
 
-    <div class="panel-heading text-center lead">{{ transaction.date || backupDate | date:'medium' }}</div>
+    <div class="panel-heading text-center lead">Orçamento</div>
 
     <table print-table="product" class="receipt table table-hover">
         <thead>
@@ -47,8 +47,6 @@
               <span>
                 {{ ( product.price * product.quantity ) | currency }}
               </span>
-              <br/>
-              <small class="small-text"><em>({{ product.price | currency }} cada)</em></small>
             </td>
           </tr>
         </tbody>
@@ -70,7 +68,8 @@
             <td> {{ transaction.payment - transaction.total | currency }} </td>
           </tr>
         </tbody>
-
       </table>
+
+      <p align="right">Não é documento fiscal</p>
   </div>
 </div>
