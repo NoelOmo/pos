@@ -82,7 +82,7 @@ pos.directive('order', function(Settings){
     restrict: 'E',
     scope: {
       finishOrder: '&',
-      newOrder: '&',
+      order: '&',
       cartTotal: '=',
       transactionId: '='
     },
@@ -94,7 +94,7 @@ pos.directive('order', function(Settings){
       };
 
       scope.openOrder = function () {
-        scope.newOrder();
+        scope.order();
       };
 
       scope.addCustomerName = function () {
