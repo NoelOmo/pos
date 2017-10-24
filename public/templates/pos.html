@@ -30,7 +30,7 @@
 		  <div class="form-group">
 			  <label class="col-md-2 lead" for="product-reference">Produto:</label>
 			  <div class="col-md-8 input-group">
-				  <input autofocus id="product-entry" type="text" class="form-control" name="product-reference" ng-model="manualItem.price"  required/>
+				  <input autofocus id="product-entry" type="text" class="form-control" name="product-reference" required/>
 			  </div>
 		  </div>
 	    </td>
@@ -45,8 +45,8 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="product in cart.products track by $index">
-			<td class="col-md-2"> {{ product.name }} </td>
+		<tr ng-repeat="product in cart.products | orderBy : '-cart_item_id' track by $index">
+			<td class="col-md-2"> {{ product.cart_item_id }} </td>
 			<td class="col-md-1"> {{ product.price | currency }} </td>
 			<td class="col-md-2">
 
