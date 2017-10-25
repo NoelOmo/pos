@@ -9,7 +9,7 @@ pos.config(['$routeProvider',
         when('/', {
           templateUrl: 'templates/home.html',
         }).
-        
+
         when('/inventory', {
           templateUrl: 'templates/inventory.html',
           controller: 'inventoryController',
@@ -38,8 +38,12 @@ pos.config(['$routeProvider',
           templateUrl: 'templates/view-transaction.html',
           controller: 'viewTransactionController',
         }).
+        when('/edit/:transactionId', {
+          templateUrl: 'templates/pos.html',
+          controller: 'posController',
+        }).
         otherwise({
           redirectTo: '/'
         });
-        
+
   }]);

@@ -21,6 +21,7 @@
 			<th>Valor Recebido</th>
 			<th>Nome do Cliente</th>
 			<th>Pagar</th>
+			<th>Editar</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -50,6 +51,18 @@
 					<i class="glyphicon glyphicon-usd"></i>
 				</a>
 			</td>
+
+			<td ng-if="transaction.status === 0" style="background-color:rgba(255, 99, 71, 0.5)">
+				<a class="btn btn-info" href="#/edit/{{ transaction._id }}">
+					<i class="glyphicon glyphicon-edit"></i>
+				</a>
+			</td>
+			<td ng-if="transaction.status === 1" style="background-color:rgba(60, 179, 113, 0.5)">
+				<a class="btn btn-info" href="#/edit/{{ transaction._id }}">
+					<i class="glyphicon glyphicon-edit"></i>
+				</a>
+			</td>
+
 		</tr>
 
 		<tr ng-if="!transactions.length">

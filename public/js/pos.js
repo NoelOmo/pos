@@ -135,7 +135,7 @@ pos.controller('editProductController', function ($scope, $location, $routeParam
 });
 
 // POS Section
-pos.controller('posController', function ($scope, $location, Inventory, Transactions) {
+pos.controller('posController', function ($scope, $routeParams, Inventory, Transactions) {
 
   $scope.barcode = '';
 
@@ -174,10 +174,12 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
     var cartJSON = localStorage.getItem('cart');
 
     if (cartJSON) {
+      console.log(cartJSON)
       $scope.cart = JSON.parse(cartJSON);
     }
     else {
-      $scope.cart = angular.copy(rawCart);
+      console.log("freshcart")
+      startFreshCart();
     }
 
   };
@@ -186,7 +188,6 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
       localStorage.removeItem('cart');
       $scope.cart = angular.copy(rawCart);
       $scope.updateCartTotals();
-      $('#barcode').focus();
   };
 
   $scope.refreshInventory = function () {
@@ -198,7 +199,22 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 
   $scope.refreshInventory();
 
+if($routeParams.transactionId){
+  $scope.operation = "edit";
+  var transactionId = $routeParams.transactionId;
+
+  Transactions.getOne(transactionId).then(function (transaction) {
+    $scope.transaction = angular.copy(transaction);
+
+    startFreshCart();
+    $scope.transactionId = {"id":transactionId};
+    $scope.cart.products = $scope.transaction.products;
+    $scope.cart.total = $scope.transaction.total;
+  });
+}else{
+  $scope.operation = "new";
   startCart();
+}
 
   var addProductAndUpdateCart = function (product) {
     $scope.cart.products = $scope.cart.products.concat([product]);
@@ -271,6 +287,16 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
     updateCartInLocalStorage();
   };
 
+  $scope.order = function() {
+    if($scope.operation === "new"){
+      console.log("newOrder");
+      $scope.newOrder();
+    }else if ($scope.operation === "edit") {
+      console.log("editOrder");
+      $scope.editOrder();
+    }
+  };
+
   $scope.newOrder = function () {
     var cart = angular.copy($scope.cart);
     cart.payment = 0;
@@ -280,6 +306,19 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
     Transactions.add(cart).then(function (res) {
       // id of this transaction
       $scope.transactionId = res;
+    });
+
+  };
+
+  $scope.editOrder = function () {
+    var cart = angular.copy($scope.cart);
+    cart.payment = 0;
+    cart.editDate = new Date();
+    var data = {id: $routeParams.transactionId, params: cart};
+
+    // save to database
+    Transactions.update(data).then(function (res) {
+      // id of this transaction
     });
 
   };
