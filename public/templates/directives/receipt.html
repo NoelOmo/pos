@@ -94,18 +94,6 @@ function printDiv() {
             <td>Total</td>
             <td> {{ transaction.total | currency }} </td>
           </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td>Recebido</td>
-            <td> {{ transaction.payment | currency }} </td>
-          </tr>
-          <tr class="lead">
-            <td></td>
-            <td></td>
-            <td>Troco</td>
-            <td> {{ transaction.payment - transaction.total | currency }} </td>
-          </tr>
         </tbody>
       </table>
 
