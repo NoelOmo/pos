@@ -46,7 +46,7 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="product in cart.products | orderBy : '-cart_item_id' track by $index">
-			<td class="col-md-2"> {{ product.cart_item_id }} </td>
+			<td class="col-md-2"> {{ product.name }} </td>
 			<td class="col-md-1"> {{ product.price | currency }} </td>
 			<td class="col-md-2">
 
