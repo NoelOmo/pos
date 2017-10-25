@@ -30,18 +30,24 @@
     <table class="receipt table table-hover">
         <thead>
           <tr class="small">
-            <th> Quantidade </th>
             <th> Produto </th>
+            <th> Quantidade </th>
+            <th> Preço unitário </th>
             <th> Preço </th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="product in transaction.products">
-            <td> {{ product.quantity }} </td>
             <td>
               <a href="#/inventory/product/{{ product._id }}">
                 {{ product.name }}
               </a>
+            </td>
+            <td> {{ product.quantity }} </td>            
+            <td>
+              <span>
+                {{ product.price | currency }}
+              </span>
             </td>
             <td>
               <span>
@@ -54,15 +60,18 @@
         <tbody>
           <tr class="total">
             <td></td>
+            <td></td>
             <td>Total</td>
             <td> {{ transaction.total | currency }} </td>
           </tr>
           <tr>
             <td></td>
+            <td></td>
             <td>Recebido</td>
             <td> {{ transaction.payment | currency }} </td>
           </tr>
           <tr class="lead">
+            <td></td>
             <td></td>
             <td>Troco</td>
             <td> {{ transaction.payment - transaction.total | currency }} </td>
