@@ -358,12 +358,18 @@ pos.controller('viewTransactionController', function ($scope, $routeParams, Tran
         });
       });
     };
-
 });
+
 
 pos.controller('liveCartController', function ($scope, Transactions, Settings) {
 
   $scope.recentTransactions = [];
+
+  var n = new Date();
+  var day = n.getDate();
+  var month = n.getMonth() + 1;
+  var year = n.getFullYear();
+  $scope.todayDate =  day + "/" + month + "/" + year;
 
   var getTransactionsData = function () {
     Transactions.get(10).then(function (transactions) {
