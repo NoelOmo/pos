@@ -241,8 +241,14 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
     addProductAndUpdateCart(product);
   };
 
-  $scope.removeProductFromCart = function (productIndex) {
-    $scope.cart.products.remove(productIndex);
+  $scope.removeProductFromCart = function (cart_item_id) {
+    for(var i = 0; i < $scope.cart.products.length; i++) {
+    if($scope.cart.products[i].cart_item_id == cart_item_id) {
+        $scope.cart.products.splice(i, 1);
+        break;
+    }
+  }
+
     $scope.updateCartTotals();
   };
 
