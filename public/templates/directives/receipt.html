@@ -1,16 +1,40 @@
+<script>
+function printDiv() {
+    var divToPrint = document.getElementById('print-section');
+    var htmlToPrint = '' +
+        '<style type="text/css">' +
+        '@page {size:A4; margin: 0;}' +
+        'table { align:center; background: white; color: black; border:solid black 1px; max-width: 2480px; width:90%;}'+
+        'th,td { width:auto; overflow: hidden; word-wrap: break-word; padding: 4px 4px 4px 4px ; text-align: center ;}' +
+        'th { border-bottom: 2px solid #333333 ;}' +
+        'td { border-bottom: 1px dotted #999999 ; overflow:hidden;}' +
+        'tfoot { border-bottom-width: 0px ; border-top: 2px solid #333333 ;padding-top: 20px ;}' +
+        'a {color: black; text-decoration: none;}' +
+        '.custom-title { font-family: verdana, arial, sans-serif ;font-size: 20px ;text-align: center ;height: 40px;}'+
+        '.panel-heading { font-family: verdana, arial, sans-serif ;font-size: 15px ;text-align: center ;height: 30px;}' +
+        '</style>';
+    htmlToPrint += divToPrint.outerHTML;
+    newWin = window.open("");
+    newWin.document.write(htmlToPrint);
+    newWin.print();
+    newWin.close();
+}
+</script>
+
 <div>
 
+
   <div class="text-center">
-    <button class="btn btn-primary" print-btn><i class="fa fa-print"></i>Imprimir</button>
+    <button onclick="printDiv()" class="btn btn-primary">Imprimir</button>
   </div>
 
   <br>
 
-  <div print-section class="panel panel-primary">
 
-    <div class="panel-heading text-center lead">Orçamento</div>
+  <div id="client-section" class="panel panel-primary">
 
-    <table print-table="product" class="receipt table table-hover">
+
+    <table class="receipt table table-hover">
         <thead>
           <tr class="small">
             <th> Referência </th>
@@ -27,6 +51,12 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  <br/>
+
+  <div id="print-section" align="center" class="panel panel-primary">
+  <div class="custom-title no-display">Galeria Embalagens</div>
+  <div class="panel-heading text-center lead">Orçamento</div>
     <table class="receipt table table-hover">
         <thead>
           <tr class="small">
@@ -43,7 +73,7 @@
                 {{ product.name }}
               </a>
             </td>
-            <td> {{ product.quantity }} </td>            
+            <td> {{ product.quantity }} </td>
             <td>
               <span>
                 {{ product.price | currency }}
@@ -79,6 +109,6 @@
         </tbody>
       </table>
 
-      <p align="right">Não é documento fiscal</p>
+      <p class="no-display" align="center">Não é documento fiscal</p>
   </div>
 </div>

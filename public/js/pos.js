@@ -14,7 +14,6 @@ angular.module('utils.autofocus', [])
 var pos = angular.module('POS', [
   'utils.autofocus',
   'ngRoute',
-  'AngularPrint',
   'ngAnimate',
   'lr.upload',
   'ui.odometer',

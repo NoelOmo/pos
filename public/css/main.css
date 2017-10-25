@@ -2,6 +2,10 @@ body {
 	background-color: oldlace;
 }
 
+.no-display {
+	display: none !important;
+}
+
 .not-home {
 	background-color: #ffffff;
 }
