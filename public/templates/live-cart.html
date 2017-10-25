@@ -36,6 +36,7 @@
 					<tr>
 						<th>Hora</th>
 						<th>Total</th>
+						<th>Status</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,6 +45,8 @@
 							<a href="#/transaction/{{ transaction._id }}">{{ transaction.date | date:'short' }}</a>
 						</td>
 						<td class="col-md-2"> {{ transaction.total | currency }} </td>
+						<td ng-if="transaction.status === 0" class="col-md-2"> Em aberto </td>
+						<td ng-if="transaction.status === 1" class="col-md-2"> Pago </td>
 					</tr>
 				</tbody>
 			</table>

@@ -83,7 +83,7 @@ app.get('/day-total', function (req, res) {
 	}
 
 
-	Transactions.find({ date: { $gte: startDate.toJSON(), $lte: endDate.toJSON() } }, function (err, docs) {
+	Transactions.find({ date: { $gte: startDate.toJSON(), $lte: endDate.toJSON() }, status: 1 }, function (err, docs) {
 
 		var result = {
 			date: startDate
