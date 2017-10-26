@@ -193,6 +193,21 @@ pos.controller('posController', function ($scope, $routeParams, Inventory, Trans
 
   };
 
+  var updateCartInLocalStorage = function () {
+    var cartJSON = JSON.stringify($scope.cart);
+    localStorage.setItem('cart', cartJSON);
+    socket.emit('update-live-cart', $scope.cart);
+  };
+
+  $scope.updateCartTotals = function () {
+    $scope.cart.total = _.reduce($scope.cart.products, function (total, product) {
+      var weightedPrice = parseFloat( product.price * product.quantity );
+      return total + weightedPrice;
+    }, 0);
+
+    updateCartInLocalStorage();
+  };
+
   var startFreshCart = function () {
       localStorage.removeItem('cart');
       $scope.cart = angular.copy(rawCart);
@@ -281,20 +296,6 @@ if($routeParams.transactionId){
     return _.find($scope.inventory, { barcode: barcode.toString() });
   };
 
-  var updateCartInLocalStorage = function () {
-    var cartJSON = JSON.stringify($scope.cart);
-    localStorage.setItem('cart', cartJSON);
-    socket.emit('update-live-cart', $scope.cart);
-  };
-
-  $scope.updateCartTotals = function () {
-    $scope.cart.total = _.reduce($scope.cart.products, function (total, product) {
-      var weightedPrice = parseFloat( product.price * product.quantity );
-      return total + weightedPrice;
-    }, 0);
-
-    updateCartInLocalStorage();
-  };
 
   $scope.order = function() {
     if($scope.operation === "new"){
