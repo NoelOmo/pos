@@ -138,19 +138,31 @@ pos.controller('posController', function ($scope, $routeParams, Inventory, Trans
 
   $scope.barcode = '';
 
+
   function barcodeHandler (e) {
 
       $scope.barcodeNotFoundError = false;
 
+      $scope.barcode = $('#product-entry').val();
+
+      var regex=/^[0-9]+$/;
+
       // if enter is pressed
       if (e.which === 13) {
 
-        $scope.barcode = $('#product-entry').val();
+        if(!$scope.barcode.match(regex)){
+          for(var i = 0; i < $scope.inventory.length; i++) {
+            if($scope.inventory[i].name === $scope.barcode) {
+              $scope.barcode = $scope.inventory[i].barcode;
+              break;
+            }
+          }
+        }
 
-        // if the barcode accumulated so far is valid, add product to cart
         if ($scope.isValidProduct($scope.barcode)) {
           $scope.addProductToCart($scope.barcode);
           $scope.barcode = '';
+          $scope.productsList = '';
           $scope.$digest();
           $('#product-entry').val($scope.barcode);
         }
@@ -173,11 +185,9 @@ pos.controller('posController', function ($scope, $routeParams, Inventory, Trans
     var cartJSON = localStorage.getItem('cart');
 
     if (cartJSON) {
-      console.log(cartJSON)
       $scope.cart = JSON.parse(cartJSON);
     }
     else {
-      console.log("freshcart")
       startFreshCart();
     }
 

@@ -30,7 +30,10 @@
 		  <div class="form-group">
 			  <label class="col-md-2 lead" for="product-reference">Produto:</label>
 			  <div class="col-md-8 input-group">
-				  <input autofocus id="product-entry" type="text" class="form-control" name="product-reference" required/>
+				  <input autofocus list="product-list" id="product-entry" type="text" class="form-control" name="product-reference" required/>
+					<datalist id="product-list">
+  					<option ng-repeat="item in inventory" value="{{ item.name }}"></option>
+					</datalist>
 			  </div>
 		  </div>
 	    </td>
