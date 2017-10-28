@@ -425,7 +425,7 @@ pos.controller('liveCartController', function ($scope, Transactions, Settings) {
       $scope.recentTransactions = _.sortBy(transactions, 'date').reverse();
     });
 
-    Transactions.getTotalForDay().then(function (dayTotal) {
+    Transactions.getTotalForDay(n).then(function (dayTotal) {
       $scope.dayTotal = dayTotal.total;
     });
   };
