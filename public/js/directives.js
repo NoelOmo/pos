@@ -23,6 +23,19 @@ pos.directive('navMenu',function ($location) {
 
 });
 
+pos.directive('preventEnterFireing', function() {
+  return {
+    link: function(scope, element, attrs) {
+      element.keypress(function(e) {
+        if (e.keyCode == 13) {
+          e.preventDefault();
+          return;
+        }
+      });
+    }
+  };
+});
+
 pos.directive('productForm',function ($location) {
   return {
     restrict: 'E',
