@@ -29,6 +29,7 @@ pos.directive('preventEnterFireing', function() {
       element.keypress(function(e) {
         if (e.keyCode == 13) {
           e.preventDefault();
+          $('#product-entry').focus();
           return;
         }
       });
