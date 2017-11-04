@@ -16,7 +16,7 @@
 </div>
 
 
-<table class="pos table table-responsive table-striped table-hover">
+<table style="width:100%" class="pos table table-responsive table-striped table-hover">
 	<thead>
 
 		<tr>
@@ -27,15 +27,10 @@
 
 		<tr>
 			<td colspan="6" class="text-center">
-		  <div class="form-group">
-			  <label class="col-md-2 lead" for="product-reference">Produto:</label>
-			  <div class="col-md-8 input-group">
 				  <input autofocus list="product-list" id="product-entry" type="text" class="form-control" name="product-reference" required/>
 					<datalist id="product-list">
   					<option ng-repeat="item in inventory" value="{{ item.name }}"></option>
 					</datalist>
-			  </div>
-		  </div>
 	    </td>
     </tr>
 

@@ -155,6 +155,12 @@ ul.nav-menu li a h3 {
 	font-size: 25px;
 }
 
+#product-entry
+{
+	font-size:40pt;
+	height:80px;
+}
+
 .checkout-total-price {
 	display: inline-flex;
 	font-size: 35px;
