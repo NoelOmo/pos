@@ -364,7 +364,9 @@ if($routeParams.transactionId){
 
 pos.controller('transactionsController', function ($scope, $location, Transactions) {
 
-  Transactions.getAll().then(function (transactions) {
+ // I'll will limit to the last 30 transactions, because it was getting slow
+ // when I had thousands of transactions.
+  Transactions.get(30).then(function (transactions) {
     $scope.transactions = _.sortBy(transactions, 'date').reverse();
   });
 
