@@ -91,7 +91,7 @@ pos.directive('addManualItem',function () {
 
 });
 
-pos.directive('order', function(Settings){
+pos.directive('order', function($location){
   return {
     restrict: 'E',
     scope: {
@@ -103,12 +103,15 @@ pos.directive('order', function(Settings){
     templateUrl: 'templates/directives/order.html',
     link: function (scope, el) {
 
+      var operation;
+
       scope.focusName = function () {
         $('#orderCustomerName').select();
       };
 
       scope.openOrder = function () {
-        scope.order();
+        // operation may be "new" or "edit"
+        operation = scope.order();
       };
 
       scope.addCustomerName = function () {
@@ -122,7 +125,18 @@ pos.directive('order', function(Settings){
         scope.finishOrder({info:orderInfo});
 
         el.find('div').eq(0).modal('hide');
+        //[TODO]: mixing jQuery and Angulajs doesn't appear to be the best solution
+        // Find a more elegant way in the future.
+        // It was done as a workaround for the same problem described here:
+        // https://stackoverflow.com/questions/22056147/bootstrap-modal-backdrop-remaining
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+
         delete scope.customerName;
+
+        if(operation === 'edit'){
+          $location.path('/transactions');
+        }
       };
     }
   };

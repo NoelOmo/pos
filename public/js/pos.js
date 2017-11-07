@@ -305,6 +305,9 @@ if($routeParams.transactionId){
       console.log("editOrder");
       $scope.editOrder();
     }
+    // the type of operation will be used in order directive.
+    // That's the solely reason why I'm returning it.
+    return $scope.operation;
   };
 
   $scope.newOrder = function () {
