@@ -176,6 +176,15 @@ pos.controller('posController', function ($scope, $routeParams, Inventory, Trans
 
   $('#product-entry').off('keypress').on('keypress', barcodeHandler);
 
+
+  //document.getElementById('product-quantity').onblur = function (event) {
+  //  var blurEl = this;
+  //  setTimeout(function() {
+  //    blurEl.focus();
+  //  }, 1000);
+  //};
+
+
   var rawCart = {
     products: [],
     total: 0,
@@ -364,9 +373,9 @@ if($routeParams.transactionId){
 
 pos.controller('transactionsController', function ($scope, $location, Transactions) {
 
- // I'll will limit to the last 30 transactions, because it was getting slow
+ // I'll will limit to the last 300 transactions, because it was getting slow
  // when I had thousands of transactions.
-  Transactions.get(30).then(function (transactions) {
+  Transactions.get(300).then(function (transactions) {
     $scope.transactions = _.sortBy(transactions, 'date').reverse();
   });
 
