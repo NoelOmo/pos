@@ -275,13 +275,19 @@ if($routeParams.transactionId){
 
   $scope.addProductToCart = function (barcode) {
 
-    if (productAlreadyInCart(barcode)) return;
-    else {
-      var product = angular.copy(_.find($scope.inventory, { barcode: barcode.toString() }));
-      product = $scope.cleanProduct(product);
-      product.quantity = 1;
-      addProductAndUpdateCart(product);
-    }
+    // I could check if product was already in cart,
+    // but I prefer to do the same that supermarket does:
+    // simply add a new item, even if it is the same
+    
+    //if (productAlreadyInCart(barcode)) return;
+    //else {
+
+    var product = angular.copy(_.find($scope.inventory, { barcode: barcode.toString() }));
+    product = $scope.cleanProduct(product);
+    product.quantity = 1;
+    addProductAndUpdateCart(product);
+
+    //}
   };
 
   $scope.addManualItem = function (product) {
