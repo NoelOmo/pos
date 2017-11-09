@@ -183,6 +183,8 @@ pos.directive('checkout', function (Settings) {
 
         scope.printReceipt({data:value});
         scope.transactionComplete = true;
+
+        scope.closeModal();
       };
 
       scope.closeModal = function () {
