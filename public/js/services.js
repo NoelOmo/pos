@@ -80,6 +80,15 @@ pos.service('Transactions', ['$http', function ($http, Inventory) {
         });
     };
 
+    this.getToBeReceivedForDay = function (date) {
+
+        var url = transactionApiUrl + 'day-to-be-received';
+
+        return $http.get(url, { params: { date: date } }).then(function (res) {
+          return res.data;
+        });
+    };
+
     this.getOne = function (transactionId) {
         var url = transactionApiUrl + transactionId;
 

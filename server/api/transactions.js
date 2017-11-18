@@ -106,6 +106,55 @@ app.get('/day-total', function (req, res) {
 	});
 });
 
+// GET total in a given day that was sold but not received
+app.get('/day-to-be-received', function (req, res) {
+
+  var startDate;
+	var endDate;
+
+	// if date is provided
+	if (req.query.date) {
+		startDate = new Date(req.query.date);
+		startDate.setHours(0,0,0,0);
+
+		endDate = new Date(req.query.date);
+		endDate.setHours(23,59,59,999);
+	}
+	else {
+
+		// beginning of current day
+		startDate = new Date();
+		startDate.setHours(0,0,0,0);
+
+		// end of current day
+		endDate = new Date();
+		endDate.setHours(23,59,59,999);
+	}
+
+
+	Transactions.find({ date: { $gte: startDate.toJSON(), $lte: endDate.toJSON() }, status: 2 }, function (err, docs) {
+
+		var result = {
+			date: startDate
+		};
+
+		if (docs) {
+
+			var total = docs.reduce(function (p, c) {
+				return p + c.total;
+			}, 0.00);
+
+			result.total = parseFloat(parseFloat(total).toFixed(2));
+
+			res.send(result);
+		}
+		else {
+			result.total = 0;
+			res.send(result);
+		}
+	});
+});
+
 // GET transactions for date
 app.get('/by-date', function (req, res) {
 

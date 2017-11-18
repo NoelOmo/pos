@@ -451,6 +451,10 @@ pos.controller('liveCartController', function ($scope, Transactions, Settings) {
     Transactions.getTotalForDay(n).then(function (dayTotal) {
       $scope.dayTotal = dayTotal.total;
     });
+
+    Transactions.getToBeReceivedForDay(n).then(function (dayToBeReceived) {
+      $scope.dayToBeReceived = dayToBeReceived.total;
+    });
   };
 
   // tell the server the page was loaded.
