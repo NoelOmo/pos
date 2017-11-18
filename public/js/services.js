@@ -80,6 +80,8 @@ pos.service('Transactions', ['$http', function ($http, Inventory) {
         });
     };
 
+//[TODO] should I refactor this and create just one function, that receives date
+// and status. Then it returns the total. It avoids duplicating code.
     this.getToBeReceivedForDay = function (date) {
 
         var url = transactionApiUrl + 'day-to-be-received';
