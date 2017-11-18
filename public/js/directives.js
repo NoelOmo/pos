@@ -159,8 +159,8 @@ pos.directive('checkout', function (Settings) {
       };
 
       scope.getChangeDue = function () {
-        if (scope.paymentAmount && scope.paymentAmount > scope.cartTotal) {
-          var change =  parseFloat(scope.paymentAmount) - parseFloat(scope.cartTotal);
+        if (scope.paymentAmount && scope.paymentAmount > scope.cartTotal - scope.discountAmount) {
+          var change =  parseFloat(scope.paymentAmount) - (parseFloat(scope.cartTotal) - parseFloat(scope.discountAmount));
           return change;
         }
         else
@@ -168,17 +168,20 @@ pos.directive('checkout', function (Settings) {
       };
 
       scope.print = function () {
-        if (scope.cartTotal > scope.paymentAmount) return;
+        if (scope.cartTotal - scope.discountAmount > scope.paymentAmount) return;
 
         var paymentAmount = angular.copy(scope.paymentAmount);
+        var discountAmount = angular.copy(scope.discountAmount);
 
         scope.previousCartInfo = {
           total: angular.copy(scope.cartTotal),
           paymentAmount: paymentAmount,
+          discountAmount: discountAmount
         };
 
         var value = {
-          payment:paymentAmount
+          payment:paymentAmount,
+          discount:discountAmount
         };
 
         scope.printReceipt({data:value});
@@ -190,6 +193,7 @@ pos.directive('checkout', function (Settings) {
       scope.closeModal = function () {
         el.find('div').eq(0).modal('hide');
         delete scope.paymentAmount;
+        delete scope.discountAmount;
         scope.transactionComplete = false;
       };
 
