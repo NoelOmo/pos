@@ -278,7 +278,7 @@ if($routeParams.transactionId){
     // I could check if product was already in cart,
     // but I prefer to do the same that supermarket does:
     // simply add a new item, even if it is the same
-    
+
     //if (productAlreadyInCart(barcode)) return;
     //else {
 
@@ -415,7 +415,10 @@ pos.controller('viewTransactionController', function ($scope, $routeParams, Tran
 
   $scope.printReceipt = function (info) {
       // print receipt
-      info.status = 1; // order is paid.
+      if(!info.status){
+        // when info.status is null, we assume the order is payed => status=1
+        info.status = 1;
+      }
 
       var data = {id: transactionId, params: info};
 

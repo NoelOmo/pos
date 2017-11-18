@@ -47,6 +47,7 @@
 						<td class="col-md-2"> {{ transaction.total | currency }} </td>
 						<td ng-if="transaction.status === 0" class="col-md-2"> Em aberto </td>
 						<td ng-if="transaction.status === 1" class="col-md-2"> Pago </td>
+						<td ng-if="transaction.status === 2" class="col-md-2"> A receber </td>
 					</tr>
 				</tbody>
 			</table>

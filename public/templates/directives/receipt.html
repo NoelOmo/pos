@@ -48,6 +48,7 @@ function printDiv() {
             <td> {{ transaction.customerName }} </td>
             <td ng-if="transaction.status === 0">  Aguardando pagamento  </td>
             <td ng-if="transaction.status === 1">  Pago  </td>
+            <td ng-if="transaction.status === 2">  A receber  </td>
           </tr>
         </tbody>
       </table>

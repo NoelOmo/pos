@@ -79,8 +79,12 @@
 
             <p class="text-danger" ng-show="checkoutForm.payment.$error.required && checkoutForm.$dirty">Digite o valor pago.</p>
 
-            <button type="submit" class="btn btn-primary btn-lg lead" ng-disabled="checkoutForm.payment.$error && paymentAmount < cartTotal - discountAmount">
+            <button type="submit" class="btn btn-primary btn-lg lead" ng-disabled="checkoutForm.payment.$error && paymentAmount <= cartTotal - discountAmount">
               Pagar
+            </button>
+
+            <button type="button" class="btn btn-primary btn-lg lead" ng-click="toBeReceived()" ng-disabled="checkoutForm.payment.$error && paymentAmount > cartTotal - discountAmount">
+              A receber
             </button>
 
           </form>

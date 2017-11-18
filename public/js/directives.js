@@ -190,6 +190,28 @@ pos.directive('checkout', function (Settings) {
         scope.closeModal();
       };
 
+      scope.toBeReceived = function () {
+        var paymentAmount = 0;
+        var discountAmount = angular.copy(scope.discountAmount);
+
+        scope.previousCartInfo = {
+          total: angular.copy(scope.cartTotal),
+          paymentAmount: paymentAmount,
+          discountAmount: discountAmount
+        };
+
+        var value = {
+          payment:paymentAmount,
+          discount:discountAmount,
+          status:2 // we must inform that order was not payed. It is to be received => status 2
+        };
+
+        scope.printReceipt({data:value});
+        scope.transactionComplete = true;
+
+        scope.closeModal();
+      };
+
       scope.closeModal = function () {
         el.find('div').eq(0).modal('hide');
         delete scope.paymentAmount;
